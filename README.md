@@ -11,6 +11,14 @@ Lightweight terminal SMS client for the Fibocom L850-GL (Intel XMM7360) modem us
 
 ## Setup & Permissions
 
+### Quick one-command setup
+```bash
+./setup.sh              # permissions, ~/.gammurc, and installs `gammu-sms-tui`
+./setup.sh --with-lte   # also installs `/usr/local/bin/lte` for `sudo lte up`
+./setup.sh --check      # inspect setup status without making changes
+```
+
+### Manual setup
 1. **Grant non-root access to `/dev/ttyXMM1`:**
    Add your user to `uucp` and install a `uaccess` udev rule (numbered `< 73` so `73-seat-late.rules` applies the ACL immediately without needing a reboot):
    ```bash
