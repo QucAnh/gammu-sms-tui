@@ -1,0 +1,18 @@
+pkgbase = gammu-sms-tui
+	pkgdesc = Lightweight terminal SMS client built on the gammu CLI
+	pkgver = 0.1.0
+	pkgrel = 1
+	url = https://github.com/QucAnh/gammu-sms-tui
+	arch = any
+	license = MIT
+	checkdepends = python-pytest
+	makedepends = python-build
+	makedepends = python-installer
+	makedepends = python-setuptools
+	makedepends = python-wheel
+	depends = python
+	depends = gammu
+	source = gammu-sms-tui-0.1.0.tar.gz::https://github.com/QucAnh/gammu-sms-tui/archive/refs/tags/v0.1.0.tar.gz
+	sha256sums = 6912275d0d0157105cb2a5f83eeaab3216a3820b8077af009e9524ca7b18638a
+
+pkgname = gammu-sms-tui

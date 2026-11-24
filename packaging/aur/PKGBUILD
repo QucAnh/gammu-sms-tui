@@ -1,0 +1,30 @@
+# Maintainer: QucAnh
+
+pkgname=gammu-sms-tui
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Lightweight terminal SMS client built on the gammu CLI"
+arch=('any')
+url="https://github.com/QucAnh/gammu-sms-tui"
+license=('MIT')
+depends=('python' 'gammu')
+makedepends=('python-build' 'python-installer' 'python-setuptools' 'python-wheel')
+checkdepends=('python-pytest')
+source=("$pkgname-$pkgver.tar.gz::$url/archive/refs/tags/v$pkgver.tar.gz")
+sha256sums=('6912275d0d0157105cb2a5f83eeaab3216a3820b8077af009e9524ca7b18638a')
+
+build() {
+  cd "$pkgname-$pkgver"
+  python -m build --wheel --no-isolation
+}
+
+check() {
+  cd "$pkgname-$pkgver"
+  python -m pytest
+}
+
+package() {
+  cd "$pkgname-$pkgver"
+  python -m installer --destdir="$pkgdir" dist/*.whl
+  install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
