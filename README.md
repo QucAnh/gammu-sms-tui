@@ -9,6 +9,24 @@ Lightweight terminal SMS client for the Fibocom L850-GL (Intel XMM7360) modem us
 - Python >= 3.11 (stdlib only; no third-party runtime packages)
 - `gammu` CLI (`1.45+`)
 
+## Hardware & OS Compatibility
+
+### Tested Environment
+This project has **only been tested on real hardware** in the following configuration:
+
+- **Laptop:** Lenovo ThinkPad X1 Yoga 4th (`20QGS1T20U`)
+- **Modem:** Fibocom L850-GL — `Intel Corporation XMM7360 LTE Advanced Modem [8086:7360] (rev 01)`, firmware `18500.5001.00.05.27.30`
+- **Kernel Driver:** `xmm7360` (`xmm7360-pci-spat-dkms-git 1:0.r261.g27c1b26-1`) exposing `/dev/ttyXMM1`
+- **OS & Kernel:** Arch Linux (`7.3.5-arch1-1`)
+- **Userspace:** Python `3.14.10`, `gammu 1.45.0`
+- **Carrier:** Viettel LTE (Vietnam `+84`)
+
+### Other Modems & Distros
+- **Core TUI (`sms_tui`):** Should work on most Linux distros and any GSM/LTE USB dongle (`/dev/ttyUSB*`, `/dev/ttyACM*`) or AT modem supported by `gammu backupsms` and `gammu sendsms TEXT` once `~/.gammurc` is configured—though **untested** outside the XMM7360 setup above.
+- **`./setup.sh` defaults:** Tailored to Arch Linux + `xmm7360` (`/dev/ttyXMM*` udev rule, `uucp` group, `at115200`, and `--with-lte` for `xmm7360-pci-spat-utils-git`). On Debian/Ubuntu, serial ports typically use `dialout` instead of `uucp`.
+- **Phone number normalization:** `store.py` normalizes local `0xxxxxxxxx` / `84xxxxxxxxx` numbers into `+84xxxxxxxxx` (Vietnam) so local and international threads merge; `+`-prefixed international numbers and alphanumeric senders work anywhere.
+- **Signal bar:** Queries `AT+CSQ;+CESQ;+COPS?;+CEREG?;+CREG?` against `device` in `~/.gammurc` (falling back to `gammu networkinfo` for non-AT connections). On XMM7360 firmware where AT returns `99`/`255`, registered state renders as `[ONLINE]` / `[ROAMING]`.
+
 ## Setup & Permissions
 
 ### Quick one-command setup
@@ -140,3 +158,7 @@ Capture a read-only local backup (gitignored under `tests/fixtures/local/`):
 gammu backupsms tests/fixtures/local/real-inbox.ini -all
 PYTHONPATH=src python3 -c "from sms_tui.parser import parse_backup, merge_parts; print(merge_parts(parse_backup('tests/fixtures/local/real-inbox.ini')))"
 ```
+
+## License
+
+[MIT](LICENSE) — note that this project invokes the external `gammu` CLI (`GPL-2.0`), which remains under its own license.
