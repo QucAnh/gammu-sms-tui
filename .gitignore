@@ -10,3 +10,5 @@ dist/
 *.db
 *.sqlite
 *.bak
+tests/fixtures/local/*
+!tests/fixtures/local/.gitkeep
